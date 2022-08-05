@@ -13,3 +13,15 @@
 -   React Pagination
 -   Lodash.Debounce
 -   Code Splitting, React Loadable, useWhyDidYouUpdate
+
+## Implemented functionality:
+
+-   Sorting and filtering products
+-   Pagination
+
+## Future functionality:
+
+-   Product search
+-   Switch language
+-   Switch theme
+-   Authorization
