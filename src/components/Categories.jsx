@@ -1,17 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    selectCategoriesList,
-    selectCategoryValue,
-    setValue,
-} from "../redux/slices/categoriesSlice";
+import { setCategoryId } from "../redux/slices/filterSlice";
 
 export default function Categories() {
     const dispatch = useDispatch();
+    const { categoryId: category, categoriesList } = useSelector((state) => state.filter);
 
-    const categoriesList = useSelector(selectCategoriesList);
-    const category = useSelector(selectCategoryValue);
-    const setCategory = (value) => dispatch(setValue(value));
+    const setCategory = (value) => dispatch(setCategoryId(value));
 
     return (
         <div className="categories">
