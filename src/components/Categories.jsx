@@ -1,8 +1,18 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    selectCategoriesList,
+    selectCategoryValue,
+    setValue,
+} from "../redux/slices/categoriesSlice";
 
-const categoriesList = ["Все", "Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"];
+export default function Categories() {
+    const dispatch = useDispatch();
 
-export default function Categories({ category, setCategory }) {
+    const categoriesList = useSelector(selectCategoriesList);
+    const category = useSelector(selectCategoryValue);
+    const setCategory = (value) => dispatch(setValue(value));
+
     return (
         <div className="categories">
             <ul>

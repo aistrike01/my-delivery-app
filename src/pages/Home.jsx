@@ -4,22 +4,22 @@ import Pagination from "../components/Pagination";
 import ProductBlock from "../components/ProductBlock/ProductBlock";
 import { Skeleton } from "../components/ProductBlock/Skeleton";
 import Sort from "../components/Sort";
+import { selectSearchValue } from "../redux/slices/searchSlice";
+import { useSelector } from "react-redux";
+import { selectCategoryValue } from "../redux/slices/categoriesSlice";
+import { selectSortTypes } from "../redux/slices/sortSlice";
+import { selectSortValue } from "../redux/slices/sortSlice";
 
 const baseURL = "https://62ea80a63a5f1572e87d2d58.mockapi.io";
-const sortTypes = [
-    { name: "популярности (DESC)", sortName: "rating", order: "desc" },
-    { name: "популярности (ASC)", sortName: "rating", order: "asc" },
-    { name: "цене (DESC)", sortName: "price", order: "desc" },
-    { name: "цене (ASC)", sortName: "price", order: "asc" },
-    { name: "алфавиту (DESC)", sortName: "title", order: "desc" },
-    { name: "алфавиту (ASC)", sortName: "title", order: "asc" },
-];
 
-export default function Home({ searchValue }) {
+export default function Home() {
+    const category = useSelector(selectCategoryValue);
+    const sortTypes = useSelector(selectSortTypes);
+    const searchValue = useSelector(selectSearchValue);
+    const sortType = useSelector(selectSortValue);
+
     const [isLoading, setIsLoading] = React.useState(true);
     const [products, setProducts] = React.useState([]);
-    const [sortType, setSortType] = React.useState(0);
-    const [category, setCategory] = React.useState(0);
     const [currentPage, setCurrentPage] = React.useState(1);
 
     React.useEffect(() => {
@@ -34,7 +34,7 @@ export default function Home({ searchValue }) {
         fetch(`${baseURL}/items?${page}&limit=4${sortBy}${order}${categoryFilter}${searchFilter}`)
             .then((r) => r.json())
             .then((data) => handleProductLoad(data));
-    }, [category, sortType, searchValue, currentPage]);
+    }, [category, sortType, searchValue, currentPage, sortTypes]);
 
     const filterProducts = products.filter((product) =>
         product.title.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ? true : false
@@ -50,8 +50,8 @@ export default function Home({ searchValue }) {
     return (
         <div className="container">
             <div className="content__top">
-                <Categories category={category} setCategory={(i) => setCategory(i)} />
-                <Sort sortTypes={sortTypes} sortType={sortType} setSortType={setSortType} />
+                <Categories />
+                <Sort />
             </div>
             <h2 className="content__title">Все продукты</h2>
             <div className="content__items">{isLoading ? productsSkeleton : productsBlocks}</div>

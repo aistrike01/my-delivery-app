@@ -1,6 +1,14 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectSortTypes, selectSortValue, setValue } from "../redux/slices/sortSlice";
 
-export default function Sort({ sortTypes, sortType, setSortType }) {
+export default function Sort() {
+    const dispatch = useDispatch();
+
+    const sortTypes = useSelector(selectSortTypes);
+    const sortType = useSelector(selectSortValue);
+    const setSortType = (value) => dispatch(setValue(value));
+
     const [open, setOpen] = React.useState(false);
 
     function handleSort(index) {

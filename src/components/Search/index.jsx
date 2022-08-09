@@ -1,7 +1,13 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectSearchValue, setValue } from "../../redux/slices/searchSlice";
 import styles from "./Search.module.scss";
 
-export default function Search({ searchValue, setSearchValue }) {
+export default function Search() {
+    const dispatch = useDispatch();
+    const searchValue = useSelector(selectSearchValue);
+    const setSearchValue = (value) => dispatch(setValue(value));
+
     return (
         <div className={styles.root}>
             <svg

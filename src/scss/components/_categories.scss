@@ -3,6 +3,8 @@
 .categories {
     ul {
         display: flex;
+        flex-wrap: wrap;
+        width: 900px;
 
         li {
             background-color: #f9f9f9;
@@ -10,6 +12,7 @@
             border-radius: 30px;
             margin-right: 10px;
             font-weight: bold;
+            margin-bottom: 10px;
             cursor: pointer;
             transition: background-color 0.1s ease-in-out;
             @include noselect();
