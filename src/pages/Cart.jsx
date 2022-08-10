@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 export default function Cart() {
     return (
@@ -83,7 +82,7 @@ export default function Cart() {
                     <div className="cart__item">
                         <div className="cart__item-img">
                             <img
-                                className="product-block__image"
+                                className="pizza-block__image"
                                 src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
                                 alt="Pizza"
                             />
@@ -158,7 +157,7 @@ export default function Cart() {
                     <div className="cart__item">
                         <div className="cart__item-img">
                             <img
-                                className="product-block__image"
+                                className="pizza-block__image"
                                 src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
                                 alt="Pizza"
                             />
@@ -233,7 +232,7 @@ export default function Cart() {
                     <div className="cart__item">
                         <div className="cart__item-img">
                             <img
-                                className="product-block__image"
+                                className="pizza-block__image"
                                 src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
                                 alt="Pizza"
                             />
@@ -308,7 +307,7 @@ export default function Cart() {
                     <div className="cart__item">
                         <div className="cart__item-img">
                             <img
-                                className="product-block__image"
+                                className="pizza-block__image"
                                 src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
                                 alt="Pizza"
                             />
@@ -393,7 +392,7 @@ export default function Cart() {
                         </span>
                     </div>
                     <div className="cart__bottom-buttons">
-                        <Link to="/" className="button button--outline button--add go-back-btn">
+                        <a href="/" className="button button--outline button--add go-back-btn">
                             <svg
                                 width="8"
                                 height="14"
@@ -411,7 +410,7 @@ export default function Cart() {
                             </svg>
 
                             <span>Вернуться назад</span>
-                        </Link>
+                        </a>
                         <div className="button pay-btn">
                             <span>Оплатить сейчас</span>
                         </div>

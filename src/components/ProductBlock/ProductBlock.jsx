@@ -1,15 +1,22 @@
 import React from "react";
-
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "../../redux/slices/cartSlice";
 const typesNames = ["тонкое", "традиционное"];
 
-export default function Product({ title, price, imageUrl, sizes, types }) {
-    const [productCount, setProductCount] = React.useState(0);
+export default function Product({ id, title, price, imageUrl, sizes, types }) {
+    const dispatch = useDispatch();
     const [activeSize, setActiveSize] = React.useState(0);
     const [activeType, setActiveType] = React.useState(0);
 
-    function addProductCount() {
-        setProductCount((prev) => prev + 1);
-    }
+    const product = useSelector((state) => state.cart.items.find((item) => item.id === id));
+
+    const onClickAdd = () => {
+        const item = { id, title, price, imageUrl, type: activeType, size: activeSize };
+        dispatch(addItem(item));
+    };
+
+    const count = product ? product.count : 0;
+
     return (
         <div className="product-block__wrapper">
             <div className="product-block">
@@ -45,9 +52,12 @@ export default function Product({ title, price, imageUrl, sizes, types }) {
                         })}
                     </ul>
                 </div>
-                <div className="product-block__bottom" onClick={addProductCount}>
+                <div className="product-block__bottom">
                     <div className="product-block__price">от {price} ₴</div>
-                    <button className="button button--outline button--add">
+                    <button
+                        className="button button--outline button--add"
+                        onClick={() => onClickAdd(1)}
+                    >
                         <svg
                             width="12"
                             height="12"
@@ -61,7 +71,7 @@ export default function Product({ title, price, imageUrl, sizes, types }) {
                             />
                         </svg>
                         <span>Добавить</span>
-                        <i>{productCount}</i>
+                        {count > 0 && <i>{count}</i>}
                     </button>
                 </div>
             </div>
