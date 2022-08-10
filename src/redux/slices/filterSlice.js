@@ -2,8 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     categoryId: 0,
-    sortType: 0,
-    pageCount: 1,
+    sortId: 0,
+    currentPage: 1,
+    searchValue: "",
     categoriesList: [
         "Все",
         "Суши",
@@ -16,7 +17,7 @@ const initialState = {
         "Соусы",
         "Вегетарианское",
     ],
-    sortTypes: [
+    sortTypesList: [
         { name: "популярности (DESC)", sortName: "rating", order: "desc" },
         { name: "популярности (ASC)", sortName: "rating", order: "asc" },
         { name: "цене (DESC)", sortName: "price", order: "desc" },
@@ -34,14 +35,23 @@ export const filterSlice = createSlice({
             state.categoryId = action.payload;
         },
         setSortTypeId: (state, action) => {
-            state.sortType = action.payload;
+            state.sortId = action.payload;
         },
-        setPageCount: (state, action) => {
-            state.pageCount = action.payload;
+        setCurrentPage: (state, action) => {
+            state.currentPage = action.payload;
+        },
+        setSearchValue: (state, action) => {
+            state.searchValue = action.payload;
+        },
+        setFilters: (state, action) => {
+            state.sortId = action.payload.sort;
+            state.categoryId = Number(action.payload.category);
+            state.currentPage = Number(action.payload.page);
         },
     },
 });
 
 export default filterSlice.reducer;
 
-export const { setCategoryId, setSortTypeId, setPageCount } = filterSlice.actions;
+export const { setCategoryId, setSortTypeId, setCurrentPage, setSearchValue, setFilters } =
+    filterSlice.actions;

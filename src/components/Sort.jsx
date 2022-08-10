@@ -4,7 +4,7 @@ import { setSortTypeId } from "../redux/slices/filterSlice";
 
 export default function Sort() {
     const dispatch = useDispatch();
-    const { sortType, sortTypes } = useSelector((state) => state.filter);
+    const { sortId, sortTypesList } = useSelector((state) => state.filter);
 
     const setSortType = (value) => dispatch(setSortTypeId(value));
 
@@ -15,7 +15,7 @@ export default function Sort() {
         setOpen(false);
     }
 
-    const sortName = sortTypes[sortType].name;
+    const sortTitle = sortTypesList[sortId].name;
 
     return (
         <div className="sort">
@@ -33,17 +33,17 @@ export default function Sort() {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span onClick={() => setOpen((prev) => !prev)}>{sortName}</span>
+                <span onClick={() => setOpen((prev) => !prev)}>{sortTitle}</span>
             </div>
             {open && (
                 <div className="sort__popup">
                     <ul>
-                        {sortTypes.map((type, index) => {
+                        {sortTypesList.map((type, index) => {
                             return (
                                 <li
                                     key={type.name + index}
                                     onClick={() => handleSort(index)}
-                                    className={sortType === index ? "active" : ""}
+                                    className={sortId === index ? "active" : ""}
                                 >
                                     {type.name}
                                 </li>
