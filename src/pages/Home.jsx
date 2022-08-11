@@ -39,6 +39,7 @@ export default function Home() {
 
     React.useEffect(() => {
         window.scrollTo(0, 0);
+        document.title = "Cibus | Home";
 
         if (!isSearch.current) {
             const fetchProducts = () => {

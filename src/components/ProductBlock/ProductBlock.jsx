@@ -1,17 +1,27 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../redux/slices/cartSlice";
-const typesNames = ["тонкое", "традиционное"];
+
+const typesList = ["тонкое", "традиционное"];
+const sizesList = ["26", "30", "40"];
 
 export default function Product({ id, title, price, imageUrl, sizes, types }) {
     const dispatch = useDispatch();
     const [activeSize, setActiveSize] = React.useState(0);
     const [activeType, setActiveType] = React.useState(0);
+    const newId = "" + id + activeType + activeSize;
 
-    const product = useSelector((state) => state.cart.items.find((item) => item.id === id));
+    const product = useSelector((state) => state.cart.items.find((item) => item.id === newId));
 
     const onClickAdd = () => {
-        const item = { id, title, price, imageUrl, type: activeType, size: activeSize };
+        const item = {
+            id: newId,
+            title,
+            price,
+            imageUrl,
+            type: typesList[activeType],
+            size: sizesList[activeSize],
+        };
         dispatch(addItem(item));
     };
 
@@ -27,13 +37,13 @@ export default function Product({ id, title, price, imageUrl, sizes, types }) {
                         {types.map((item, index) => {
                             return (
                                 <li
-                                    key={typesNames[item] + index}
+                                    key={types[item] + index}
                                     onClick={() => {
                                         setActiveType(index);
                                     }}
                                     className={activeType === index ? "active" : ""}
                                 >
-                                    {typesNames[item]}
+                                    {typesList[item]}
                                 </li>
                             );
                         })}

@@ -18,10 +18,10 @@
 
 -   Sorting and filtering products
 -   Pagination
+-   Product search
 
 ## Future functionality:
 
--   Product search
 -   Switch language
 -   Switch theme
 -   Authorization
