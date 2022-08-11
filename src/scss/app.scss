@@ -39,7 +39,7 @@ body {
 
     &__top {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
 
         @media (max-width: 1260px) {
@@ -74,6 +74,19 @@ body {
                     }
                 }
             }
+        }
+    }
+
+    &__error-info {
+        margin: 50px auto;
+        width: 600px;
+        text-align: center;
+
+        h2 {
+            padding: 15px;
+        }
+        p {
+            padding: 5px;
         }
     }
 }

@@ -1,4 +1,3 @@
-import axios from "axios";
 import qs from "qs";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,21 +8,17 @@ import ProductBlock from "../components/ProductBlock/ProductBlock";
 import { Skeleton } from "../components/ProductBlock/Skeleton";
 import Sort from "../components/Sort";
 import { setFilters } from "../redux/slices/filterSlice";
-
-const baseURL = "https://62ea80a63a5f1572e87d2d58.mockapi.io";
+import { fetchProducts } from "../redux/slices/productSlice";
 
 export default function Home() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { searchValue, categoryId, sortId, sortTypesList, currentPage } = useSelector(
-        (state) => state.filter
-    );
-
+    const { searchValue, categoryId, sortId, sortTypesList, categoriesList, currentPage } =
+        useSelector((state) => state.filter);
     const isSearch = React.useRef(false);
     const isMounted = React.useRef(false);
 
-    const [isLoading, setIsLoading] = React.useState(true);
-    const [products, setProducts] = React.useState([]);
+    const { items: products, status } = useSelector((state) => state.product);
 
     React.useEffect(() => {
         if (window.location.search) {
@@ -38,30 +33,23 @@ export default function Home() {
     }, [dispatch, sortTypesList]);
 
     React.useEffect(() => {
-        window.scrollTo(0, 0);
         document.title = "Cibus | Home";
 
-        if (!isSearch.current) {
-            const fetchProducts = () => {
-                setIsLoading(true);
+        const getProducts = async () => {
+            const page = "page=" + currentPage;
+            const sortBy = "&sortBy=" + sortTypesList[sortId].sortName;
+            const order = "&order=" + sortTypesList[sortId].order;
+            const categoryFilter = categoryId > 0 ? "&category=" + categoryId : "";
+            const searchFilter = searchValue ? "&search=" + searchValue : "";
 
-                const page = "page=" + currentPage;
-                const sortBy = "&sortBy=" + sortTypesList[sortId].sortName;
-                const order = "&order=" + sortTypesList[sortId].order;
-                const categoryFilter = categoryId > 0 ? "&category=" + categoryId : "";
-                const searchFilter = searchValue ? "&search=" + searchValue : "";
-                axios
-                    .get(
-                        `${baseURL}/items?${page}&limit=4${sortBy}${order}${categoryFilter}${searchFilter}`
-                    )
-                    .then((r) => r.data)
-                    .then((data) => handleProductLoad(data));
-            };
-            fetchProducts();
-        }
+            dispatch(fetchProducts({ page, sortBy, order, categoryFilter, searchFilter }));
+        };
+
+        getProducts();
+        window.scrollTo(0, 0);
 
         isSearch.current = false;
-    }, [categoryId, sortId, searchValue, currentPage, sortTypesList]);
+    }, [categoryId, sortId, searchValue, currentPage, sortTypesList, dispatch]);
 
     React.useEffect(() => {
         if (isMounted.current) {
@@ -77,16 +65,12 @@ export default function Home() {
         isMounted.current = true;
     }, [navigate, categoryId, sortId, currentPage, sortTypesList]);
 
+    console.log("render home");
     const filterProducts = products.filter((product) =>
         product.title.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ? true : false
     );
     const productsBlocks = filterProducts.map((item) => <ProductBlock key={item.id} {...item} />);
     const productsSkeleton = [...new Array(4)].map((_, index) => <Skeleton key={index} />);
-
-    function handleProductLoad(data) {
-        setProducts(data);
-        setIsLoading(false);
-    }
 
     return (
         <div className="container">
@@ -94,8 +78,19 @@ export default function Home() {
                 <Categories />
                 <Sort />
             </div>
-            <h2 className="content__title">Все продукты</h2>
-            <div className="content__items">{isLoading ? productsSkeleton : productsBlocks}</div>
+            <h2 className="content__title">
+                {categoryId === 0 ? "Все продукты" : categoriesList[categoryId]}
+            </h2>
+            {status === "error" ? (
+                <div className="content__error-info">
+                    <h2>Помилка!</h2>
+                    <p>Не вдалося отримати продукти</p>
+                </div>
+            ) : (
+                <div className="content__items">
+                    {status === "loading" ? productsSkeleton : productsBlocks}
+                </div>
+            )}
             <Pagination />
         </div>
     );
