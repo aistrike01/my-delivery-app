@@ -7,18 +7,18 @@ import Pagination from "../components/Pagination";
 import ProductBlock from "../components/ProductBlock/ProductBlock";
 import { Skeleton } from "../components/ProductBlock/Skeleton";
 import Sort from "../components/Sort";
-import { setFilters } from "../redux/slices/filterSlice";
-import { fetchProducts } from "../redux/slices/productSlice";
+import { selectFilter, setFilters } from "../redux/slices/filterSlice";
+import { fetchProducts, selectProduct } from "../redux/slices/productSlice";
 
 export default function Home() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { searchValue, categoryId, sortId, sortTypesList, categoriesList, currentPage } =
-        useSelector((state) => state.filter);
+        useSelector(selectFilter);
     const isSearch = React.useRef(false);
     const isMounted = React.useRef(false);
 
-    const { items: products, status } = useSelector((state) => state.product);
+    const { items: products, status } = useSelector(selectProduct);
 
     React.useEffect(() => {
         if (window.location.search) {

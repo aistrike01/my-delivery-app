@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "../../redux/slices/cartSlice";
+import { addItem, selectCartItemById } from "../../redux/slices/cartSlice";
 
 const typesList = ["тонкое", "традиционное"];
 const sizesList = ["26", "30", "40"];
@@ -11,7 +11,7 @@ export default function Product({ id, title, price, imageUrl, sizes, types }) {
     const [activeType, setActiveType] = React.useState(0);
     const newId = "" + id + activeType + activeSize;
 
-    const product = useSelector((state) => state.cart.items.find((item) => item.id === newId));
+    const product = useSelector(selectCartItemById(newId));
 
     const onClickAdd = () => {
         const item = {

@@ -2,10 +2,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "../assets/img/cibus-logo.png";
+import { selectCart } from "../redux/slices/cartSlice";
 import Search from "./Search";
 
 export default function Header() {
-    const { totalPrice, items } = useSelector((state) => state.cart);
+    const { totalPrice, items } = useSelector(selectCart);
 
     const totalCount = items.reduce((sum, item) => sum + item.count, 0);
 

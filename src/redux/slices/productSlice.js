@@ -25,19 +25,21 @@ export const productSlice = createSlice({
     },
     extraReducers: {
         [fetchProducts.fulfilled]: (state, action) => {
-            state.status = "success";
             state.items = action.payload;
+            state.status = "success";
         },
         [fetchProducts.pending]: (state) => {
-            state.status = "loading";
             state.items = [];
+            state.status = "loading";
         },
         [fetchProducts.rejected]: (state) => {
-            state.status = "error";
             state.items = [];
+            state.status = "error";
         },
     },
 });
+
+export const selectProduct = (state) => state.product;
 
 export default productSlice.reducer;
 
