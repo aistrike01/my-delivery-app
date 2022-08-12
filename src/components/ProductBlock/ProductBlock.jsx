@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { addItem, selectCartItemById } from "../../redux/slices/cartSlice";
 
 const typesList = ["тонкое", "традиционное"];
@@ -9,8 +10,7 @@ export default function Product({ id, title, price, imageUrl, sizes, types }) {
     const dispatch = useDispatch();
     const [activeSize, setActiveSize] = React.useState(0);
     const [activeType, setActiveType] = React.useState(0);
-    const newId = "" + id + activeType + activeSize;
-
+    const newId = id + activeType + activeSize;
     const product = useSelector(selectCartItemById(newId));
 
     const onClickAdd = () => {
@@ -30,7 +30,9 @@ export default function Product({ id, title, price, imageUrl, sizes, types }) {
     return (
         <div className="product-block__wrapper">
             <div className="product-block">
-                <img className="product-block__image" src={imageUrl} alt="Pizza" />
+                <Link to={`/product/${id}`}>
+                    <img className="product-block__image" src={imageUrl} alt="Product" />
+                </Link>
                 <h4 className="product-block__title">{title}</h4>
                 <div className="product-block__selector">
                     <ul>

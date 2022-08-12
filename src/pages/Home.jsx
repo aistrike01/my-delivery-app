@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
 import ProductBlock from "../components/ProductBlock/ProductBlock";
-import { Skeleton } from "../components/ProductBlock/Skeleton";
+import Skeleton from "../components/ProductBlock/Skeleton";
 import Sort from "../components/Sort";
 import { selectFilter, setFilters } from "../redux/slices/filterSlice";
 import { fetchProducts, selectProduct } from "../redux/slices/productSlice";

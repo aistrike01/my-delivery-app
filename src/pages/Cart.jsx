@@ -12,6 +12,7 @@ export default function Cart() {
     }, []);
 
     const { totalPrice, items } = useSelector(selectCart);
+
     const totalCount = items.reduce((sum, item) => sum + item.count, 0);
 
     const onClickClear = () => {
@@ -21,6 +22,7 @@ export default function Cart() {
     if (totalPrice === 0) {
         return <CartEmpty />;
     }
+
     return (
         <div className="container container--cart">
             <div className="cart">
@@ -109,7 +111,7 @@ export default function Cart() {
                             Всего продуктов: <b>{totalCount} шт.</b>
                         </span>
                         <span>
-                            Сумма заказа: <b>{totalPrice} ₽</b>
+                            Сумма заказа: <b>{totalPrice} ₴</b>
                         </span>
                     </div>
                     <div className="cart__bottom-buttons">

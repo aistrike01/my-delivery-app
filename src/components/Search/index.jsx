@@ -15,16 +15,21 @@ export default function Search() {
         inputRef.current?.focus();
     };
 
-    const updateSearchValue = React.useCallback(() => {
-        debounce((str) => {
-            dispatch(setSearchValue(str));
-        }, 200);
-    }, [dispatch]);
+    const debounceSearch = React.useMemo(
+        () =>
+            debounce((str) => {
+                dispatch(setSearchValue(str));
+            }, 200),
+        [dispatch]
+    );
+
+    const updateSearchValue = React.useCallback(debounceSearch, [debounceSearch]);
 
     const onChangeInput = (event) => {
         setValue(event.target.value);
         updateSearchValue(event.target.value);
     };
+
     return (
         <div className={styles.root}>
             <svg

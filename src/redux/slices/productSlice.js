@@ -5,13 +5,19 @@ import { baseURL } from "../../services/index";
 export const fetchProducts = createAsyncThunk("product/fetchProducts", async (params) => {
     const { page, sortBy, order, categoryFilter, searchFilter } = params;
     const { data } = await axios.get(
-        `${baseURL}/items?${page}&limit=4${sortBy}${order}${categoryFilter}${searchFilter}`
+        `${baseURL}items?${page}&limit=4${sortBy}${order}${categoryFilter}${searchFilter}`
     );
+    return data;
+});
+
+export const fetchProduct = createAsyncThunk("product/fetchProduct", async (id) => {
+    const { data } = await axios.get(`${baseURL}items/${id}`);
     return data;
 });
 
 const initialState = {
     items: [],
+    product: {},
     status: "loading",
 };
 
@@ -21,6 +27,9 @@ export const productSlice = createSlice({
     reducers: {
         setItems(state, action) {
             state.items = action.payload;
+        },
+        setProduct(state, action) {
+            state.product = action.payload;
         },
     },
     extraReducers: {
@@ -36,6 +45,18 @@ export const productSlice = createSlice({
             state.items = [];
             state.status = "error";
         },
+        [fetchProduct.fulfilled]: (state, action) => {
+            state.product = action.payload;
+            state.status = "success";
+        },
+        [fetchProduct.pending]: (state) => {
+            state.product = {};
+            state.status = "loading";
+        },
+        [fetchProduct.rejected]: (state) => {
+            state.product = {};
+            state.status = "error";
+        },
     },
 });
 
@@ -43,4 +64,4 @@ export const selectProduct = (state) => state.product;
 
 export default productSlice.reducer;
 
-export const { setItems } = productSlice.actions;
+export const { setItems, setProduct } = productSlice.actions;
