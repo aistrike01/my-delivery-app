@@ -239,14 +239,14 @@ body {
             width: 4%;
 
             .button {
-                border-color: darken($color: $gray-line, $amount: 10);
+                border-color: $purple;
             }
 
             svg {
                 transform: rotate(45deg);
 
                 path {
-                    fill: darken($color: $gray-line, $amount: 15);
+                    fill: $purple;
                 }
             }
 
@@ -258,8 +258,8 @@ body {
                 }
                 &:hover,
                 &:active {
-                    border-color: darken($color: $gray-line, $amount: 80);
-                    background-color: darken($color: $gray-line, $amount: 80);
+                    border-color: $purple;
+                    background-color: $purple;
                 }
             }
         }
@@ -281,7 +281,7 @@ body {
 
                 &:last-of-type {
                     b {
-                        color: $green;
+                        color: $purple;
                     }
                 }
             }
