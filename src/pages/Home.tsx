@@ -1,32 +1,37 @@
 import qs from "qs";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
 import ProductBlock from "../components/ProductBlock/ProductBlock";
 import Skeleton from "../components/ProductBlock/Skeleton";
 import Sort from "../components/Sort";
-import { selectFilter, setFilters } from "../redux/slices/filterSlice";
-import { fetchProducts, selectProduct } from "../redux/slices/productSlice";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { IFilters, ISortType, selectFilter, setFilters } from "../redux/slices/filterSlice";
+import { fetchProducts, IProduct, selectProduct } from "../redux/slices/productSlice";
 
 export default function Home() {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const { searchValue, categoryId, sortId, sortTypesList, categoriesList, currentPage } =
-        useSelector(selectFilter);
+        useAppSelector(selectFilter);
     const isSearch = React.useRef(false);
     const isMounted = React.useRef(false);
 
-    const { items: products, status } = useSelector(selectProduct);
+    const { items: products, status } = useAppSelector(selectProduct);
 
     React.useEffect(() => {
         if (window.location.search) {
             let params = qs.parse(window.location.search.substring(1));
-            params.sort = sortTypesList.findIndex(
-                (obj) => obj.sortName === params.sort && obj.order === params.order
-            );
-            dispatch(setFilters(params));
+
+            if (params.sort && params.order) {
+                let paramsSort = sortTypesList.findIndex(
+                    (obj: ISortType) => obj.sortName === params.sort && obj.order === params.order
+                );
+
+                let filters = { ...params, sort: paramsSort };
+                dispatch(setFilters(filters as IFilters));
+            }
 
             isSearch.current = true;
         }
@@ -66,10 +71,12 @@ export default function Home() {
     }, [navigate, categoryId, sortId, currentPage, sortTypesList]);
 
     console.log("render home");
-    const filterProducts = products.filter((product) =>
+    const filterProducts = products.filter((product: IProduct) =>
         product.title.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ? true : false
     );
-    const productsBlocks = filterProducts.map((item) => <ProductBlock key={item.id} {...item} />);
+    const productsBlocks = filterProducts.map((item: IProduct) => (
+        <ProductBlock key={item.id} {...item} />
+    ));
     const productsSkeleton = [...new Array(4)].map((_, index) => <Skeleton key={index} />);
 
     return (

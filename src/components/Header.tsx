@@ -1,14 +1,13 @@
-import React from "react";
-import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/img/cibus-logo.png";
-import { selectCart } from "../redux/slices/cartSlice";
+import { useAppSelector } from "../hooks/redux";
+import { ICartItem, selectCart } from "../redux/slices/cartSlice";
 import Search from "./Search";
 
 export default function Header() {
-    const { totalPrice, items } = useSelector(selectCart);
+    const { totalPrice, items } = useAppSelector(selectCart);
     const location = useLocation();
-    const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+    const totalCount = items.reduce((sum: number, item: ICartItem) => sum + item.count, 0);
 
     return (
         <div className="header">

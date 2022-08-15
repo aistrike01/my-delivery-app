@@ -1,7 +1,7 @@
 import React from "react";
 import NotFoundBlock from "../components/NotFoundBlock";
 
-export default function NotFound() {
+const NotFound: React.FC = () => {
     React.useEffect(() => {
         document.title = "Cibus | 404";
     }, []);
@@ -11,4 +11,6 @@ export default function NotFound() {
             <NotFoundBlock />
         </div>
     );
-}
+};
+
+export default NotFound;

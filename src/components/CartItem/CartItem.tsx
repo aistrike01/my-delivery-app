@@ -1,12 +1,11 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { addItem, removeFullItem, removeItem } from "../../redux/slices/cartSlice";
+import { useAppDispatch } from "../../hooks/redux";
+import { addItem, ICartItem, removeFullItems, removeItem } from "../../redux/slices/cartSlice";
 
-export default function CartItem({ id, title, price, imageUrl, type, size, count }) {
-    const dispatch = useDispatch();
+export default function CartItem({ id, title, price, imageUrl, type, size, count }: ICartItem) {
+    const dispatch = useAppDispatch();
 
     const onClickPlus = () => {
-        dispatch(addItem({ id }));
+        dispatch(addItem({ id, title, price, imageUrl, type, size, count }));
     };
 
     const onClickMinus = () => {
@@ -15,7 +14,7 @@ export default function CartItem({ id, title, price, imageUrl, type, size, count
 
     const onClickRemove = () => {
         if (window.confirm(`Видалити "${title}"?`)) {
-            dispatch(removeFullItem(id));
+            dispatch(removeFullItems(id));
         }
     };
 

@@ -1,19 +1,19 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CartItem from "../components/CartItem/CartItem";
-import { clearItems, selectCart } from "../redux/slices/cartSlice";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { clearItems, ICartItem, selectCart } from "../redux/slices/cartSlice";
 import CartEmpty from "./CartEmpty";
 
-export default function Cart() {
-    const dispatch = useDispatch();
+const Cart = () => {
+    const dispatch = useAppDispatch();
     React.useEffect(() => {
         document.title = "Cibus | Cart";
     }, []);
 
-    const { totalPrice, items } = useSelector(selectCart);
+    const { totalPrice, items } = useAppSelector(selectCart);
 
-    const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+    const totalCount = items.reduce((sum: number, item: { count: number }) => sum + item.count, 0);
 
     const onClickClear = () => {
         if (window.confirm("Очистити кошик?")) dispatch(clearItems());
@@ -101,7 +101,7 @@ export default function Cart() {
                     </button>
                 </div>
                 <div className="content__items">
-                    {items.map((item) => (
+                    {items.map((item: ICartItem) => (
                         <CartItem key={item.id} {...item} />
                     ))}
                 </div>
@@ -142,4 +142,6 @@ export default function Cart() {
             </div>
         </div>
     );
-}
+};
+
+export default Cart;

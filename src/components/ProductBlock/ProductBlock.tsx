@@ -1,26 +1,28 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addItem, selectCartItemById } from "../../redux/slices/cartSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { addItem, ICartItem, selectCartItemById } from "../../redux/slices/cartSlice";
+import { IProduct } from "../../redux/slices/productSlice";
 
 const typesList = ["тонкое", "традиционное"];
 const sizesList = ["26", "30", "40"];
 
-export default function Product({ id, title, price, imageUrl, sizes, types }) {
-    const dispatch = useDispatch();
+const Product: React.FC<IProduct> = ({ id, title, price, imageUrl, sizes, types }: IProduct) => {
+    const dispatch = useAppDispatch();
     const [activeSize, setActiveSize] = React.useState(0);
     const [activeType, setActiveType] = React.useState(0);
     const newId = id + activeType + activeSize;
-    const product = useSelector(selectCartItemById(newId));
+    const product = useAppSelector(selectCartItemById(newId));
 
     const onClickAdd = () => {
-        const item = {
+        const item: ICartItem = {
             id: newId,
             title,
             price,
             imageUrl,
             type: typesList[activeType],
             size: sizesList[activeSize],
+            count: 0,
         };
         dispatch(addItem(item));
     };
@@ -68,7 +70,7 @@ export default function Product({ id, title, price, imageUrl, sizes, types }) {
                     <div className="product-block__price">от {price} ₴</div>
                     <button
                         className="button button--outline button--add"
-                        onClick={() => onClickAdd(1)}
+                        onClick={() => onClickAdd()}
                     >
                         <svg
                             width="12"
@@ -89,4 +91,6 @@ export default function Product({ id, title, price, imageUrl, sizes, types }) {
             </div>
         </div>
     );
-}
+};
+
+export default Product;

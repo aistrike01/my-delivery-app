@@ -1,23 +1,24 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectFilter, setSortTypeId } from "../redux/slices/filterSlice";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { ISortType, selectFilter, setSortTypeId } from "../redux/slices/filterSlice";
 
-export default function Sort() {
-    const sortRef = React.useRef();
+const Sort = () => {
+    const sortRef = React.useRef<HTMLDivElement>(null);
 
-    const dispatch = useDispatch();
-    const { sortId, sortTypesList } = useSelector(selectFilter);
+    const dispatch = useAppDispatch();
+    const { sortId, sortTypesList } = useAppSelector(selectFilter);
 
-    const setSortType = (value) => dispatch(setSortTypeId(value));
+    const setSortType = (value: number) => dispatch(setSortTypeId(value));
 
     const [open, setOpen] = React.useState(false);
 
-    function handleSort(index) {
+    function handleSort(index: number) {
         setSortType(index);
         setOpen(false);
     }
+
     React.useEffect(() => {
-        const handleClickOutside = (e) => {
+        const handleClickOutside = (e: any) => {
             if (!e.path.includes(sortRef.current)) {
                 setOpen(false);
             }
@@ -52,7 +53,7 @@ export default function Sort() {
             {open && (
                 <div className="sort__popup">
                     <ul>
-                        {sortTypesList.map((type, index) => {
+                        {sortTypesList.map((type: ISortType, index: number) => {
                             return (
                                 <li
                                     key={type.name + index}
@@ -68,4 +69,6 @@ export default function Sort() {
             )}
         </div>
     );
-}
+};
+
+export default Sort;

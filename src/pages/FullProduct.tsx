@@ -1,18 +1,19 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Skeleton from "../components/ProductBlock/Skeleton";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { fetchProduct, selectProduct } from "../redux/slices/productSlice";
-export default function FullProduct() {
+
+const FullProduct: React.FC = () => {
     const { id } = useParams();
 
-    const { product, status } = useSelector(selectProduct);
+    const { product, status } = useAppSelector(selectProduct);
 
     const { title, imageUrl, price } = product;
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     React.useEffect(() => {
-        dispatch(fetchProduct(id));
+        id && dispatch(fetchProduct(id));
     }, [id, dispatch]);
 
     if (status === "loading") {
@@ -44,4 +45,6 @@ export default function FullProduct() {
             </div>
         </div>
     );
-}
+};
+
+export default FullProduct;

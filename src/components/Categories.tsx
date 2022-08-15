@@ -1,17 +1,16 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { selectFilter, setCategoryId } from "../redux/slices/filterSlice";
 
 export default function Categories() {
-    const dispatch = useDispatch();
-    const { categoryId, categoriesList } = useSelector(selectFilter);
+    const dispatch = useAppDispatch();
+    const { categoryId, categoriesList } = useAppSelector(selectFilter);
 
-    const setCategory = (value) => dispatch(setCategoryId(value));
+    const setCategory = (value: number) => dispatch(setCategoryId(value));
 
     return (
         <div className="categories">
             <ul>
-                {categoriesList.map((name, index) => {
+                {categoriesList.map((name: string, index: number) => {
                     return (
                         <li
                             key={name + index}

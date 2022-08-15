@@ -1,10 +1,35 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
-const initialState = {
+export interface ISortType {
+    name: string;
+    sortName: string;
+    order: string;
+}
+
+export interface IFilters {
+    sort: number;
+    category: string;
+    page: string;
+    order: string;
+}
+
+interface IFilterState {
+    categoryId: number;
+    sortId: number;
+    currentPage: number;
+    searchValue: string;
+    order: string;
+    categoriesList: string[];
+    sortTypesList: ISortType[];
+}
+
+const initialState: IFilterState = {
     categoryId: 0,
     sortId: 0,
     currentPage: 1,
     searchValue: "",
+    order: "desc",
     categoriesList: [
         "Все",
         "Суши",
@@ -31,28 +56,29 @@ export const filterSlice = createSlice({
     name: "filter",
     initialState,
     reducers: {
-        setCategoryId: (state, action) => {
+        setCategoryId: (state, action: PayloadAction<number>) => {
             state.categoryId = action.payload;
         },
-        setSortTypeId: (state, action) => {
+        setSortTypeId: (state, action: PayloadAction<number>) => {
             state.sortId = action.payload;
         },
-        setCurrentPage: (state, action) => {
+        setCurrentPage: (state, action: PayloadAction<number>) => {
             state.currentPage = action.payload;
         },
-        setSearchValue: (state, action) => {
+        setSearchValue: (state, action: PayloadAction<string>) => {
             state.searchValue = action.payload;
         },
-        setFilters: (state, action) => {
+        setFilters: (state, action: PayloadAction<IFilters>) => {
             state.sortId = action.payload.sort;
             state.categoryId = Number(action.payload.category);
             state.currentPage = Number(action.payload.page);
+            state.order = action.payload.order;
         },
     },
 });
 
-export const selectFilter = (state) => state.filter;
-export const selectCurrentPage = (state) => state.filter.currentPage;
+export const selectFilter = (state: RootState) => state.filter;
+export const selectCurrentPage = (state: RootState) => state.filter.currentPage;
 
 export default filterSlice.reducer;
 
