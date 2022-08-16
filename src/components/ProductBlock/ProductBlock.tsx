@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { ICartItem, plusItem, selectCartItemById } from "../../store/slices/cartSlice";
-import { IProduct } from "../../store/slices/productSlice";
+import { selectCartItemById } from "../../store/cart/selectors";
+import { plusItem } from "../../store/cart/slice";
+import { ICartItem } from "../../store/cart/types";
+import { IProduct } from "../../store/product/types";
 
 const typesList = ["тонкое", "традиционное"];
 const sizesList = ["26", "30", "40"];

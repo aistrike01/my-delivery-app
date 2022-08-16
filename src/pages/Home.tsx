@@ -7,8 +7,12 @@ import ProductBlock from "../components/ProductBlock/ProductBlock";
 import Skeleton from "../components/ProductBlock/Skeleton";
 import Sort from "../components/Sort";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { IFilters, ISortType, selectFilter, setFilters } from "../store/slices/filterSlice";
-import { fetchProducts, IProduct, selectProduct } from "../store/slices/productSlice";
+import { selectFilter } from "../store/filter/selectors";
+import { setFilters } from "../store/filter/slice";
+import { IFilters, ISortType } from "../store/filter/types";
+import { fetchProducts } from "../store/product/asyncActions";
+import { selectProduct } from "../store/product/selectors";
+import { IProduct } from "../store/product/types";
 
 const Home: React.FC = () => {
     const navigate = useNavigate();

@@ -1,5 +1,6 @@
 import { useAppDispatch } from "../../hooks/redux";
-import { ICartItem, minusItem, plusItem, removeFullItems } from "../../store/slices/cartSlice";
+import { minusItem, plusItem, removeFullItems } from "../../store/cart/slice";
+import { ICartItem } from "../../store/cart/types";
 
 export default function CartItem({ id, title, price, imageUrl, type, size, count }: ICartItem) {
     const dispatch = useAppDispatch();

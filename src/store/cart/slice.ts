@@ -1,20 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../store";
-
-export interface ICartItem {
-    id: string;
-    title: string;
-    price: number;
-    imageUrl: string;
-    type: string;
-    size: string;
-    count: number;
-}
-
-interface ICartState {
-    totalPrice: number;
-    items: ICartItem[];
-}
+import calcTotalPrice from "../../utils/calcTotalPrice";
+import { ICartItem, ICartState } from "./types";
 
 const initialState: ICartState = {
     totalPrice: 0,
@@ -25,6 +11,11 @@ export const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
+        setItems: (state, action: PayloadAction<ICartItem[]>) => {
+            state.items = action.payload;
+
+            state.totalPrice = calcTotalPrice(state.items);
+        },
         plusItem: (state, action: PayloadAction<ICartItem>) => {
             const sameItem = state.items.find((item) => item.id === action.payload.id);
 
@@ -34,9 +25,7 @@ export const cartSlice = createSlice({
                 state.items.push({ ...action.payload, count: 1 });
             }
 
-            state.totalPrice = state.items.reduce((sum, obj) => {
-                return sum + obj.price * obj.count;
-            }, 0);
+            state.totalPrice = calcTotalPrice(state.items);
         },
         minusItem: (state, action: PayloadAction<string>) => {
             const item = state.items.find((item) => item.id === action.payload);
@@ -49,16 +38,12 @@ export const cartSlice = createSlice({
                 }
             }
 
-            state.totalPrice = state.items.reduce((sum, obj) => {
-                return sum + obj.price * obj.count;
-            }, 0);
+            state.totalPrice = calcTotalPrice(state.items);
         },
         removeFullItems: (state, action: PayloadAction<string>) => {
             state.items = state.items.filter((item) => item.id !== action.payload);
 
-            state.totalPrice = state.items.reduce((sum, obj) => {
-                return sum + obj.price * obj.count;
-            }, 0);
+            state.totalPrice = calcTotalPrice(state.items);
         },
         clearItems: (state) => {
             state.items = [];
@@ -67,11 +52,6 @@ export const cartSlice = createSlice({
     },
 });
 
-export const selectCart = (state: RootState) => state.cart;
-
-export const selectCartItemById = (id: string) => (state: RootState) =>
-    state.cart.items.find((item) => item.id === id);
-
 export default cartSlice.reducer;
 
-export const { plusItem, minusItem, removeFullItems, clearItems } = cartSlice.actions;
+export const { setItems, plusItem, minusItem, removeFullItems, clearItems } = cartSlice.actions;
