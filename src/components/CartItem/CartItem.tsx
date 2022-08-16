@@ -1,15 +1,15 @@
 import { useAppDispatch } from "../../hooks/redux";
-import { addItem, ICartItem, removeFullItems, removeItem } from "../../redux/slices/cartSlice";
+import { ICartItem, minusItem, plusItem, removeFullItems } from "../../store/slices/cartSlice";
 
 export default function CartItem({ id, title, price, imageUrl, type, size, count }: ICartItem) {
     const dispatch = useAppDispatch();
 
     const onClickPlus = () => {
-        dispatch(addItem({ id, title, price, imageUrl, type, size, count }));
+        dispatch(plusItem({ id, title, price, imageUrl, type, size, count }));
     };
 
     const onClickMinus = () => {
-        dispatch(removeItem(id));
+        dispatch(minusItem(id));
     };
 
     const onClickRemove = () => {

@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { addItem, ICartItem, selectCartItemById } from "../../redux/slices/cartSlice";
-import { IProduct } from "../../redux/slices/productSlice";
+import { ICartItem, plusItem, selectCartItemById } from "../../store/slices/cartSlice";
+import { IProduct } from "../../store/slices/productSlice";
 
 const typesList = ["тонкое", "традиционное"];
 const sizesList = ["26", "30", "40"];
@@ -24,7 +24,7 @@ const Product: React.FC<IProduct> = ({ id, title, price, imageUrl, sizes, types 
             size: sizesList[activeSize],
             count: 0,
         };
-        dispatch(addItem(item));
+        dispatch(plusItem(item));
     };
 
     const count = product ? product.count : 0;
