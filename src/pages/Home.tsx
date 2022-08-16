@@ -1,11 +1,7 @@
 import qs from "qs";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Categories from "../components/Categories";
-import Pagination from "../components/Pagination";
-import ProductBlock from "../components/ProductBlock/ProductBlock";
-import Skeleton from "../components/ProductBlock/Skeleton";
-import Sort from "../components/Sort";
+import { Categories, Pagination, ProductBlock, Skeleton, Sort } from "../components";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { selectFilter } from "../store/filter/selectors";
 import { setFilters } from "../store/filter/slice";

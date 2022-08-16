@@ -9,7 +9,14 @@ import { IProduct } from "../../store/product/types";
 const typesList = ["тонкое", "традиционное"];
 const sizesList = ["26", "30", "40"];
 
-const Product: React.FC<IProduct> = ({ id, title, price, imageUrl, sizes, types }: IProduct) => {
+export const ProductBlock: React.FC<IProduct> = ({
+    id,
+    title,
+    price,
+    imageUrl,
+    sizes,
+    types,
+}: IProduct) => {
     const dispatch = useAppDispatch();
     const [activeSize, setActiveSize] = React.useState(0);
     const [activeType, setActiveType] = React.useState(0);
@@ -94,5 +101,3 @@ const Product: React.FC<IProduct> = ({ id, title, price, imageUrl, sizes, types 
         </div>
     );
 };
-
-export default Product;

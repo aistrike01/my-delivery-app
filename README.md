@@ -12,7 +12,7 @@
 -   React Content Loader
 -   React Pagination (Need to Remove)
 -   Lodash.Debounce (Need to Remove)
--   Code Splitting, React Loadable
+-   Code Splitting
 
 ## Implemented functionality:
 

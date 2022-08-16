@@ -1,19 +1,44 @@
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
-import Cart from "./pages/Cart";
-import FullProduct from "./pages/FullProduct";
 import Home from "./pages/Home";
-import NotFound from "./pages/NotFound";
 import "./scss/app.scss";
+
+const Cart = React.lazy(() => import(/* webpackChunkName: "Cart"*/ "./pages/Cart"));
+const NotFound = React.lazy(() => import(/* webpackChunkName: "NotFound"*/ "./pages/NotFound"));
+const FullProduct = React.lazy(
+    () => import(/* webpackChunkName: "FullProduct"*/ "./pages/FullProduct")
+);
 
 export default function App() {
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
                 <Route path="" element={<Home />} />
-                <Route path="cart" element={<Cart />} />
-                <Route path="product/:id" element={<FullProduct />} />
-                <Route path="*" element={<NotFound />} />
+                <Route
+                    path="cart"
+                    element={
+                        <React.Suspense fallback={<h4>'Загрузка корзины...'</h4>}>
+                            <Cart />
+                        </React.Suspense>
+                    }
+                />
+                <Route
+                    path="product/:id"
+                    element={
+                        <React.Suspense fallback={<h4>'Загрузка продукта...'</h4>}>
+                            <FullProduct />
+                        </React.Suspense>
+                    }
+                />
+                <Route
+                    path="*"
+                    element={
+                        <React.Suspense fallback={<h4>'Загрузка...'</h4>}>
+                            <NotFound />
+                        </React.Suspense>
+                    }
+                />
             </Route>
         </Routes>
     );

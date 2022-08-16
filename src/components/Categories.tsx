@@ -7,7 +7,7 @@ interface CategoriesProps {
     categoriesList: string[];
 }
 
-const Categories: React.FC<CategoriesProps> = React.memo(
+export const Categories: React.FC<CategoriesProps> = React.memo(
     ({ categoryId, categoriesList }: CategoriesProps) => {
         const dispatch = useAppDispatch();
 
@@ -32,5 +32,3 @@ const Categories: React.FC<CategoriesProps> = React.memo(
         );
     }
 );
-
-export default Categories;

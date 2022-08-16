@@ -8,7 +8,7 @@ interface SortProps {
     sortTypes: ISortType[];
 }
 
-const Sort: React.FC<SortProps> = React.memo(({ sortId, sortTypes }: SortProps) => {
+export const Sort: React.FC<SortProps> = React.memo(({ sortId, sortTypes }: SortProps) => {
     const sortRef = React.useRef<HTMLDivElement>(null);
 
     const dispatch = useAppDispatch();
@@ -75,5 +75,3 @@ const Sort: React.FC<SortProps> = React.memo(({ sortId, sortTypes }: SortProps) 
         </div>
     );
 });
-
-export default Sort;

@@ -4,7 +4,7 @@ import { selectCurrentPage } from "../../store/filter/selectors";
 import { setCurrentPage } from "../../store/filter/slice";
 import styles from "./Pagination.module.scss";
 
-export default function Pagination() {
+export const Pagination: React.FC = () => {
     const dispatch = useAppDispatch();
     const currentPage = useAppSelector(selectCurrentPage);
     const setPage = (value: number) => dispatch(setCurrentPage(value));
@@ -23,4 +23,4 @@ export default function Pagination() {
             />
         </div>
     );
-}
+};
