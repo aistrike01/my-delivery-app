@@ -37,4 +37,14 @@
             color: #7b7b7b;
         }
     }
+
+    &__cart {
+        max-height: 50px;
+    }
+}
+
+@media (max-width: 760px) {
+    .header {
+        padding: 20px 0;
+    }
 }

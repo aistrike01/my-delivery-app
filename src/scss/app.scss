@@ -64,6 +64,10 @@ body {
                 margin-bottom: 20px;
             }
             flex-direction: column;
+
+            .sort {
+                align-self: center;
+            }
         }
 
         @media (max-width: 760px) {
@@ -88,6 +92,12 @@ body {
         p {
             padding: 5px;
         }
+    }
+}
+
+@media (max-width: 760px) {
+    .content {
+        padding: 20px 0;
     }
 }
 

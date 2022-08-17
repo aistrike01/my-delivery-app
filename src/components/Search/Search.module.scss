@@ -1,12 +1,15 @@
 .root {
     position: relative;
+    max-width: 500px;
+    width: 100%;
+    margin: 0 25px;
 }
 
 .input {
     border: 1px solid rgba(0, 0, 0, 0.1);
     padding: 15px 20px;
-    width: 350px;
     border-radius: 10px;
+    width: 100%;
     font-size: 18px;
     padding-left: 45px;
     transition: all 0.15s ease-in-out;
@@ -45,4 +48,10 @@
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 2px;
+}
+
+@media (max-width: 645px) {
+    .root {
+        margin: 10px 0 15px 0;
+    }
 }
