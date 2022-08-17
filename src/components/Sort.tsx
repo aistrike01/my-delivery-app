@@ -1,12 +1,17 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { ISortType, selectFilter, setSortTypeId } from "../redux/slices/filterSlice";
+import { useAppDispatch } from "../hooks/redux";
+import { setSortTypeId } from "../store/filter/slice";
+import { ISortType } from "../store/filter/types";
 
-const Sort = () => {
+interface SortProps {
+    sortId: number;
+    sortTypes: ISortType[];
+}
+
+export const Sort: React.FC<SortProps> = React.memo(({ sortId, sortTypes }: SortProps) => {
     const sortRef = React.useRef<HTMLDivElement>(null);
 
     const dispatch = useAppDispatch();
-    const { sortId, sortTypesList } = useAppSelector(selectFilter);
 
     const setSortType = (value: number) => dispatch(setSortTypeId(value));
 
@@ -30,7 +35,7 @@ const Sort = () => {
         };
     }, []);
 
-    const sortTitle = sortTypesList[sortId].name;
+    const sortTitle = sortTypes[sortId].name;
 
     return (
         <div ref={sortRef} className="sort">
@@ -53,7 +58,7 @@ const Sort = () => {
             {open && (
                 <div className="sort__popup">
                     <ul>
-                        {sortTypesList.map((type: ISortType, index: number) => {
+                        {sortTypes.map((type: ISortType, index: number) => {
                             return (
                                 <li
                                     key={type.name + index}
@@ -69,6 +74,4 @@ const Sort = () => {
             )}
         </div>
     );
-};
-
-export default Sort;
+});

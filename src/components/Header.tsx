@@ -1,13 +1,39 @@
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../assets/img/cibus-logo.png";
-import { useAppSelector } from "../hooks/redux";
-import { ICartItem, selectCart } from "../redux/slices/cartSlice";
+import logo from "../assets/img/cibus-logo.svg";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { selectCart } from "../store/cart/selectors";
+import { clearItems, setItems } from "../store/cart/slice";
+import { ICartItem } from "../store/cart/types";
 import Search from "./Search";
 
 export default function Header() {
+    const dispatch = useAppDispatch();
     const { totalPrice, items } = useAppSelector(selectCart);
     const location = useLocation();
     const totalCount = items.reduce((sum: number, item: ICartItem) => sum + item.count, 0);
+    const isMounted = React.useRef(false);
+
+    React.useEffect(() => {
+        const cartItems = localStorage.getItem("cart");
+
+        if (cartItems) {
+            try {
+                const parseItems = JSON.parse(cartItems);
+                dispatch(setItems(parseItems));
+            } catch {
+                dispatch(clearItems());
+            }
+        }
+    }, [dispatch]);
+
+    React.useEffect(() => {
+        if (isMounted.current) {
+            const itemsJson = JSON.stringify(items);
+            localStorage.setItem("cart", itemsJson);
+        }
+        isMounted.current = true;
+    }, [items]);
 
     return (
         <div className="header">

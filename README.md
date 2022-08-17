@@ -10,9 +10,9 @@
 -   React Hooks
 -   CSS-Modules / SCSS
 -   React Content Loader
--   React Pagination
--   Lodash.Debounce
--   Code Splitting, React Loadable, useWhyDidYouUpdate
+-   React Pagination (Need to Remove)
+-   Lodash.Debounce (Need to Remove)
+-   Code Splitting
 
 ## Implemented functionality:
 
@@ -22,6 +22,7 @@
 
 ## Future functionality:
 
+-   Authorization
+-   Admin Dashboard
 -   Switch language
 -   Switch theme
--   Authorization

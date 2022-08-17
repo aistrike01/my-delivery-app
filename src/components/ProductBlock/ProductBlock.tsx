@@ -1,13 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { addItem, ICartItem, selectCartItemById } from "../../redux/slices/cartSlice";
-import { IProduct } from "../../redux/slices/productSlice";
+import { selectCartItemById } from "../../store/cart/selectors";
+import { plusItem } from "../../store/cart/slice";
+import { ICartItem } from "../../store/cart/types";
+import { IProduct } from "../../store/product/types";
 
 const typesList = ["тонкое", "традиционное"];
 const sizesList = ["26", "30", "40"];
 
-const Product: React.FC<IProduct> = ({ id, title, price, imageUrl, sizes, types }: IProduct) => {
+export const ProductBlock: React.FC<IProduct> = ({
+    id,
+    title,
+    price,
+    imageUrl,
+    sizes,
+    types,
+}: IProduct) => {
     const dispatch = useAppDispatch();
     const [activeSize, setActiveSize] = React.useState(0);
     const [activeType, setActiveType] = React.useState(0);
@@ -24,7 +33,7 @@ const Product: React.FC<IProduct> = ({ id, title, price, imageUrl, sizes, types 
             size: sizesList[activeSize],
             count: 0,
         };
-        dispatch(addItem(item));
+        dispatch(plusItem(item));
     };
 
     const count = product ? product.count : 0;
@@ -92,5 +101,3 @@ const Product: React.FC<IProduct> = ({ id, title, price, imageUrl, sizes, types 
         </div>
     );
 };
-
-export default Product;

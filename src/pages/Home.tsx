@@ -1,19 +1,19 @@
 import qs from "qs";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Categories from "../components/Categories";
-import Pagination from "../components/Pagination";
-import ProductBlock from "../components/ProductBlock/ProductBlock";
-import Skeleton from "../components/ProductBlock/Skeleton";
-import Sort from "../components/Sort";
+import { Categories, Pagination, ProductBlock, Skeleton, Sort } from "../components";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { IFilters, ISortType, selectFilter, setFilters } from "../redux/slices/filterSlice";
-import { fetchProducts, IProduct, selectProduct } from "../redux/slices/productSlice";
+import { selectFilter } from "../store/filter/selectors";
+import { setFilters } from "../store/filter/slice";
+import { IFilters, ISortType } from "../store/filter/types";
+import { fetchProducts } from "../store/product/asyncActions";
+import { selectProduct } from "../store/product/selectors";
+import { IProduct } from "../store/product/types";
 
-export default function Home() {
+const Home: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const { searchValue, categoryId, sortId, sortTypesList, categoriesList, currentPage } =
+    const { searchValue, categoryId, categoriesList, sortId, sortTypesList, currentPage } =
         useAppSelector(selectFilter);
     const isSearch = React.useRef(false);
     const isMounted = React.useRef(false);
@@ -70,7 +70,6 @@ export default function Home() {
         isMounted.current = true;
     }, [navigate, categoryId, sortId, currentPage, sortTypesList]);
 
-    console.log("render home");
     const filterProducts = products.filter((product: IProduct) =>
         product.title.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ? true : false
     );
@@ -82,8 +81,8 @@ export default function Home() {
     return (
         <div className="container">
             <div className="content__top">
-                <Categories />
-                <Sort />
+                <Categories categoryId={categoryId} categoriesList={categoriesList} />
+                <Sort sortId={sortId} sortTypes={sortTypesList} />
             </div>
             <h2 className="content__title">
                 {categoryId === 0 ? "Все продукты" : categoriesList[categoryId]}
@@ -101,4 +100,6 @@ export default function Home() {
             <Pagination />
         </div>
     );
-}
+};
+
+export default Home;

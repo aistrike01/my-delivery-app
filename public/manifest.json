@@ -1,6 +1,7 @@
 {
     "short_name": "Cibus",
     "name": "Cibus — Food delivery",
+    "description": "My delivery website portfolio - aistrike",
     "icons": [
         {
             "src": "favicon.ico",
@@ -20,6 +21,6 @@
     ],
     "start_url": ".",
     "display": "standalone",
-    "theme_color": "#000000",
-    "background_color": "#ffffff"
+    "theme_color": "#6969af",
+    "background_color": "#a5a5ff"
 }
