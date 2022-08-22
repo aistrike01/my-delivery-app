@@ -1,6 +1,5 @@
 import { useAppDispatch } from "../../hooks/redux";
-import { minusItem, plusItem, removeFullItems } from "../../store/cart/slice";
-import { ICartItem } from "../../store/cart/types";
+import { ICartItem, minusItem, plusItem, removeFullItems } from "../../store/cart";
 
 export const CartItem: React.FC<ICartItem> = ({
     id,

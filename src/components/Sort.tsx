@@ -1,7 +1,6 @@
 import React from "react";
 import { useAppDispatch } from "../hooks/redux";
-import { setSortTypeId } from "../store/filter/slice";
-import { ISortType } from "../store/filter/types";
+import { ISortType, setSortTypeId } from "../store/filter";
 
 interface SortProps {
     sortId: number;

@@ -2,8 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { Skeleton } from "../components";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { fetchProduct } from "../store/product/asyncActions";
-import { selectProduct } from "../store/product/selectors";
+import { fetchProduct, selectProduct } from "../store/product";
 
 const FullProduct: React.FC = () => {
     const { id } = useParams();

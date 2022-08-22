@@ -3,12 +3,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Categories, Pagination, ProductBlock, Skeleton, Sort } from "../components";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { selectFilter } from "../store/filter/selectors";
-import { setFilters } from "../store/filter/slice";
-import { IFilters, ISortType } from "../store/filter/types";
-import { fetchProducts } from "../store/product/asyncActions";
-import { selectProduct } from "../store/product/selectors";
-import { IProduct } from "../store/product/types";
+import { IFilters, ISortType, selectFilter, setFilters } from "../store/filter";
+import { fetchProducts, IProduct, selectProduct } from "../store/product";
 
 const Home: React.FC = () => {
     const navigate = useNavigate();

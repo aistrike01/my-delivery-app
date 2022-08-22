@@ -1,4 +1,4 @@
-import { ICartItem } from "../store/cart/types";
+import { ICartItem } from "../store/cart";
 
 export default function calcTotalPrice(items: ICartItem[]): number {
     return items.reduce((sum, obj) => {

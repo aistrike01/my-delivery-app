@@ -1,6 +1,6 @@
 import React from "react";
 import { useAppDispatch } from "../hooks/redux";
-import { setCategoryId } from "../store/filter/slice";
+import { setCategoryId } from "../store/filter";
 
 interface CategoriesProps {
     categoryId: number;

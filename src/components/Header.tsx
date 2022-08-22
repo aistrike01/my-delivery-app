@@ -2,9 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/img/cibus-logo.svg";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { selectCart } from "../store/cart/selectors";
-import { clearItems, setItems } from "../store/cart/slice";
-import { ICartItem } from "../store/cart/types";
+import { clearItems, ICartItem, selectCart, setItems } from "../store/cart";
 import Search from "./Search";
 
 export default function Header() {
