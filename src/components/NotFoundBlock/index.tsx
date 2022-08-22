@@ -1,4 +1,4 @@
-import React from "react";
+import { GoBack } from "../Buttons";
 import styles from "./NotFoundBlock.module.scss";
 
 export default function NotFoundBlock() {
@@ -7,6 +7,7 @@ export default function NotFoundBlock() {
             <h1>404</h1>
             <h2>( ͡❛ ︵ ͡❛)</h2>
             <h3>Not Found </h3>
+            <GoBack />
         </div>
     );
 }

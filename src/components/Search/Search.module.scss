@@ -3,6 +3,10 @@
     max-width: 500px;
     width: 100%;
     margin: 0 25px;
+
+    @media (max-width: 645px) {
+        margin: 10px 0 15px 0;
+    }
 }
 
 .input {
@@ -48,10 +52,4 @@
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 2px;
-}
-
-@media (max-width: 645px) {
-    .root {
-        margin: 10px 0 15px 0;
-    }
 }

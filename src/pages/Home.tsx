@@ -1,4 +1,4 @@
-import qs from "qs";
+import qs, { ParsedQs } from "qs";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Categories, Pagination, ProductBlock, Skeleton, Sort } from "../components";
@@ -20,18 +20,25 @@ const Home: React.FC = () => {
 
     const { items: products, status } = useAppSelector(selectProduct);
 
+    function getFiltersParams(params: ParsedQs): IFilters {
+        const newParams: IFilters = Object.create(params);
+
+        if (params.order && params.sort) {
+            let paramsSort = sortTypesList.findIndex(
+                (obj: ISortType) => obj.sortName === params.sort && obj.order === params.order
+            );
+        }
+
+        return newParams;
+    }
+
     React.useEffect(() => {
         if (window.location.search) {
             let params = qs.parse(window.location.search.substring(1));
 
-            if (params.sort && params.order) {
-                let paramsSort = sortTypesList.findIndex(
-                    (obj: ISortType) => obj.sortName === params.sort && obj.order === params.order
-                );
+            const filters = getFiltersParams(params);
 
-                let filters = { ...params, sort: paramsSort };
-                dispatch(setFilters(filters as IFilters));
-            }
+            dispatch(setFilters(filters));
 
             isSearch.current = true;
         }
