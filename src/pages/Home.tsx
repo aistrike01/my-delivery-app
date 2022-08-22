@@ -1,44 +1,30 @@
-import qs, { ParsedQs } from "qs";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { Categories, Pagination, ProductBlock, Skeleton, Sort } from "../components";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { IFilters, ISortType, selectFilter, setFilters } from "../store/filter";
+import { selectFilter, setFilters } from "../store/filter";
 import { fetchProducts, IProduct, selectProduct } from "../store/product";
 
 const Home: React.FC = () => {
-    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { searchValue, categoryId, categoriesList, sortId, sortTypesList, currentPage } =
         useAppSelector(selectFilter);
     const isSearch = React.useRef(false);
     const isMounted = React.useRef(false);
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const { items: products, status } = useAppSelector(selectProduct);
 
-    function getFiltersParams(params: ParsedQs): IFilters {
-        const newParams: IFilters = Object.create(params);
-
-        if (params.order && params.sort) {
-            let paramsSort = sortTypesList.findIndex(
-                (obj: ISortType) => obj.sortName === params.sort && obj.order === params.order
-            );
-        }
-
-        return newParams;
-    }
-
     React.useEffect(() => {
-        if (window.location.search) {
-            let params = qs.parse(window.location.search.substring(1));
+        const sort = searchParams.get("sort") || "";
+        const order = searchParams.get("order") || "";
+        const category = searchParams.get("category") || "";
+        const page = searchParams.get("page") || "";
 
-            const filters = getFiltersParams(params);
+        const filters = { sort, order, category, page };
 
-            dispatch(setFilters(filters));
-
-            isSearch.current = true;
-        }
-    }, [dispatch, sortTypesList]);
+        dispatch(setFilters(filters));
+    }, [dispatch, searchParams, sortTypesList]);
 
     React.useEffect(() => {
         document.title = "Cibus | Home";
@@ -61,17 +47,14 @@ const Home: React.FC = () => {
 
     React.useEffect(() => {
         if (isMounted.current) {
-            const queryString = qs.stringify({
-                sort: sortTypesList[sortId].sortName,
-                order: sortTypesList[sortId].order,
-                category: categoryId,
-                page: currentPage,
-            });
-
-            navigate(`?${queryString}`);
+            setSearchParams(
+                new URLSearchParams(
+                    `sort=${sortTypesList[sortId].sortName}&order=${sortTypesList[sortId].order}&category=${categoryId}&page=${currentPage}`
+                )
+            );
         }
         isMounted.current = true;
-    }, [navigate, categoryId, sortId, currentPage, sortTypesList]);
+    }, [categoryId, currentPage, setSearchParams, sortId, sortTypesList]);
 
     const filterProducts = products.filter((product: IProduct) =>
         product.title.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ? true : false

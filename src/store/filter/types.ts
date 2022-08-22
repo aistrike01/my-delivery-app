@@ -5,7 +5,7 @@ export interface ISortType {
 }
 
 export interface IFilters {
-    sort: number;
+    sort: string;
     category: string;
     page: string;
     order: string;

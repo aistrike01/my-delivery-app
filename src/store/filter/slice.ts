@@ -46,10 +46,17 @@ export const filterSlice = createSlice({
             state.searchValue = action.payload;
         },
         setFilters: (state, action: PayloadAction<IFilters>) => {
-            state.sortId = action.payload.sort;
-            state.categoryId = Number(action.payload.category);
-            state.currentPage = Number(action.payload.page);
-            state.order = action.payload.order;
+            const sort = state.sortTypesList.findIndex(
+                (sort) => sort.sortName === action.payload.sort
+            );
+            const categoryId = Number(action.payload.category);
+            const currentPage = Number(action.payload.page);
+            const correctOrder = action.payload.order === "desc" || action.payload.order === "asc";
+
+            state.sortId = sort < 0 ? 0 : sort;
+            state.categoryId = isNaN(categoryId) ? 0 : categoryId;
+            state.currentPage = isNaN(currentPage) || currentPage < 1 ? 1 : currentPage;
+            state.order = correctOrder ? action.payload.order : "desc";
         },
     },
 });
