@@ -1,6 +1,7 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
 import { Categories, Pagination, ProductBlock, Skeleton, Sort } from "../components";
+import ProductEmpty from "../components/ProductBlock/ProductEmpty";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { selectFilter, setFilters } from "../store/filter";
 import { fetchProducts, IProduct, selectProduct } from "../store/product";
@@ -59,9 +60,14 @@ const Home: React.FC = () => {
     const filterProducts = products.filter((product: IProduct) =>
         product.title.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ? true : false
     );
-    const productsBlocks = filterProducts.map((item: IProduct) => (
-        <ProductBlock key={item.id} {...item} />
-    ));
+
+    /// Check if product is empty
+    const productsBlocks =
+        filterProducts.length === 0 ? (
+            <ProductEmpty />
+        ) : (
+            filterProducts.map((item: IProduct) => <ProductBlock key={item.id} {...item} />)
+        );
     const productsSkeleton = [...new Array(4)].map((_, index) => <Skeleton key={index} />);
 
     return (
