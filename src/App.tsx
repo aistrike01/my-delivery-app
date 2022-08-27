@@ -9,6 +9,7 @@ const NotFound = React.lazy(() => import(/* webpackChunkName: "NotFound"*/ "./pa
 const FullProduct = React.lazy(
     () => import(/* webpackChunkName: "FullProduct"*/ "./pages/FullProduct")
 );
+const Admin = React.lazy(() => import(/* webpackChunkName: "Admin"*/ "./pages/Admin"));
 
 export default function App() {
     return (
@@ -40,6 +41,14 @@ export default function App() {
                     }
                 />
             </Route>
+            <Route
+                path="/admin"
+                element={
+                    <React.Suspense fallback={<h4>'Загрузка админ панели...'</h4>}>
+                        <Admin />
+                    </React.Suspense>
+                }
+            />
         </Routes>
     );
 }
