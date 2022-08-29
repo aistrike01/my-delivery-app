@@ -1,3 +1,4 @@
+import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
@@ -12,7 +13,9 @@ if (rootElem) {
     root.render(
         <Provider store={store}>
             <BrowserRouter>
-                <App />
+                <React.Suspense fallback={<h4>'Загрузка авторизации...'</h4>}>
+                    <App />
+                </React.Suspense>
             </BrowserRouter>
         </Provider>
     );
